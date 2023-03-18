@@ -1,13 +1,26 @@
 import ContactItem from 'components/ContactItem/ContactItem';
+import { useSelector } from 'react-redux';
 import { useFetchContactsQuery } from 'redux/contactSlice';
+
+export const getFilter = state => state.filter;
 
 const ContactList = () => {
   const { data: contacts, isFetching } = useFetchContactsQuery();
+  const filterValue = useSelector(getFilter);
+  const getVisibleContacts = () => {
+    const normalizedFilter = filterValue.toLocaleLowerCase();
+    return filterValue
+      ? contacts.filter(contact =>
+          contact.name.toLocaleLowerCase().includes(normalizedFilter)
+        )
+      : contacts;
+  };
+  const filteredContact = getVisibleContacts();
   return (
     <ul>
       {isFetching && <h2>Loading...</h2>}
       {contacts &&
-        contacts.map(contact => (
+        filteredContact.map(contact => (
           <li
             key={contact.id}
             style={{
@@ -22,6 +35,8 @@ const ContactList = () => {
     </ul>
   );
 };
+
+export default ContactList;
 
 // CREATED BY HOOK
 
@@ -60,4 +75,4 @@ const ContactList = () => {
 //   onDeleteContact: PropTypes.func.isRequired,
 // };
 
-export default ContactList;
+// export default ContactList;

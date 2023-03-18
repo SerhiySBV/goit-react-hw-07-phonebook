@@ -1,10 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { contactApi } from './contactSlice';
-import { contactsReducer } from './contactsSlice';
 import { filterReducer } from './filterSlice';
 
 const rootReduser = combineReducers({
-  contacts: contactsReducer,
   filter: filterReducer,
   [contactApi.reducerPath]: contactApi.reducer,
 });

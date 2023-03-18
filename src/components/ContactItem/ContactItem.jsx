@@ -7,7 +7,7 @@ const ContactItem = ({ contact: { name, phone, id } }) => {
     <>
       <p>{name} :</p>
       <p>{phone}</p>
-      <Delete onClick={() => deleteContact(id)}>
+      <Delete onClick={() => deleteContact(id)} disabled={isDeliting}>
         {isDeliting ? 'Deliting...' : 'Delete'}
       </Delete>
     </>
